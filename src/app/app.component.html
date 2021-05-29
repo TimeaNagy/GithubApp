@@ -1,26 +1,16 @@
-<div class="wrapper">
-    <div class="container">
-        <div class="row">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <div class="container-fluid">
-                    <div class="col-md-6 col-lg-6">
-                        <a class="nav-item nav-link" href="">Overview</a>
-                    </div>
-                    <div class="col-md-6 col-lg-6" style="text-align: right">
-                        <a class="nav-item nav-link" href="">Log In</a>
-                    </div>
-                </div>
-            </nav>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container container-fluid wrapper">
+        <div class="col-md-6 col-lg-6">
+            <a class="nav-item nav-link" href="">Overview</a>
         </div>
-        <router-outlet></router-outlet>
-        <div class="row" >
-            <nav class="navbar navbar-expand-lg navbar-light bg-light" style="margin-top: 20px; padding-top: 20px;">
-                <div class="container-fluid">
-                    <div class="col-md-12 col-lg-12" style="text-align: center">
-                        <p>© Tímea Nagy - nagytimea12@yahoo.com</p>
-                    </div>
-                </div>
-            </nav>
+        <div class="col-md-6 col-lg-6" style="text-align: right">
+            <a class="nav-item nav-link" href="">Log In</a>
         </div>
     </div>
+</nav>
+<div class="container">
+    <router-outlet></router-outlet>
 </div>
+<footer class="page-footer bg-light" style="margin-top: 20px;">
+    <div class="footer-copyright text-center py-3">© 2021 Copyright: Tímea Nagy<br>nagytimea12@yahoo.com</div>
+</footer>

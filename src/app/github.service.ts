@@ -23,4 +23,15 @@ export class GithubService {
     return this.http.get(this.githubUrl + '/users/' + login)
   }
 
+  getFollowersForDeveloper(login: string, perPage: number, page: number): Observable<any> {
+    let params = new HttpParams().append('per_page', perPage);
+    params = params.append('page', page);
+    return this.http.get(this.githubUrl + '/users/' + login + '/followers',  { params })
+  }
+
+  getRepositoriesForDeveloper(login: string, perPage: number, page: number): Observable<any> {
+    let params = new HttpParams().append('per_page', perPage);
+    params = params.append('page', page);
+    return this.http.get(this.githubUrl + '/users/' + login + '/repos',  { params })
+  }
 }

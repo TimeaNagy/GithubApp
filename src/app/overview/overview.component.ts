@@ -21,7 +21,7 @@ export class OverviewComponent implements OnInit {
   constructor(private githubService: GithubService, private router: Router) { }
 
   ngOnInit(): void {
-    this.getDevelopers()
+    this.getDevelopers();
   }
 
   getDevelopers(): void {

@@ -1,11 +1,23 @@
-<div class="row" *ngIf="developerLoaded | async">
-    <h3 style="text-align: center; margin-top: 50px;">{{developer?.name}}</h3>
+<div class="row text-center" *ngIf="developerLoaded | async">
+    <h3 style="margin-top: 50px;">{{developer?.name}}</h3>
     <div class="col-md-4 col-lg-4">
-        <img src={{developer?.avatar_url}} width="200" height="200" />
+        <h5>Personal information</h5>
+        <img src={{developer?.avatar_url}} class="rounded" width="200" height="200" style="margin: 20px;"/>
         <h5><span class="badge badge-secondary">{{developer?.followers}} Followers</span></h5>
         <h5><span class="badge badge-primary">{{developer?.public_repos}} Public repositories</span></h5>
     </div>
     <div class="col-md-4 col-lg-4">
+        <h5>Followers</h5>
+        <div class="list-group scroll-list">
+            <a class="list-group-item list-group-item-action" href="{{follower.html_url}}" *ngFor="let follower of followers">{{follower.login}}</a>
+        </div>
+        <button class="btn btn-light" (click)="getNextPageFollowers()" [disabled]="lastPageFollowers">Show more followers</button>
     </div>
-    <div class="col-md-4 col-lg-4"></div>
+    <div class="col-md-4 col-lg-4">
+        <h5>Repositories</h5>
+        <div class="list-group scroll-list">
+            <a class="list-group-item list-group-item-action" href="{{repository.html_url}}" *ngFor="let repository of repositories">{{repository.name}}</a>
+        </div>
+        <button class="btn btn-light" (click)="getNextPageRepositories()" [disabled]="lastPageRepositories">Show more repositories</button>
+    </div>
 </div>

@@ -1,0 +1,5 @@
+.scroll-list{
+    overflow-y: scroll; 
+    height: 600px;
+    text-align: left;
+}

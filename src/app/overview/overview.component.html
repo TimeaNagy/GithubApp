@@ -1,0 +1,43 @@
+<div class="row w-50 mx-auto">
+  <h6 style="text-align: center; margin-top: 20px;">Sort by</h6>
+  <div class="btn-group" role="group">
+    <input type="radio" class="btn" id="option1" value="followers" name="options" [(ngModel)]="sort"
+      ngDefaultControl>Number of followers
+    <input type="radio" class="btn" id="option2" value="repositories" name="options" [(ngModel)]="sort" ngDefaultControl
+      checked>Number of repositories
+    <input type="radio" class="btn" id="option3" value="joined" name="options" [(ngModel)]="sort" ngDefaultControl>Date
+    joined
+  </div>
+  <h6 style="text-align: center; margin-top: 20px;">Search by location</h6>
+  <div class="input-group mb-3">
+    <input type="text" class="form-control" placeholder="Location" [(ngModel)]="location">
+    <div class="input-group-append">
+      <button class="btn btn-outline-primary" type="button" (click)="searchDevelopers()">Search</button>
+    </div>
+  </div>
+</div>
+
+<div class="row" style="text-align: center;">
+  <h3 style="margin-top: 50px;">List of developers</h3>
+  <table class="table table-striped table-hover" *ngIf="developersLoaded | async">
+    <thead>
+      <tr>
+        <th class="col-md-3">Photo</th>
+        <th class="col-md-3">Name</th>
+        <th class="col-md-2">Number of followers</th>
+        <th class="col-md-2">Number of repositories</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr scope="row" *ngFor="let developer of developers;" (click)="showDetail(developer)" style="cursor: pointer;">
+        <td><img src={{developer.avatar_url}} width="100" height="100"></td>
+        <td>{{developer.login}}</td>
+        <td>{{developer.followers}}</td>
+        <td>{{developer.public_repos}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <nav>
+    <button class="btn btn-lg btn-outline-primary" (click)=getNextPage()>Show more</button>
+  </nav>
+</div>

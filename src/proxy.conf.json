@@ -1,0 +1,8 @@
+{
+    "/oauth/*": {
+        "target": "https://timeanagy.github.io/GithubApp/",
+        "secure": false,
+        "logLevel": "debug",
+        "changeOrigin":true
+    }
+}

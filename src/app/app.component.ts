@@ -46,5 +46,6 @@ export class AppComponent implements OnInit{
     this.accessToken = '';
     this.code = '';
     this.loggedIn = false;
+    this.router.navigate(['/']);
   }
 }

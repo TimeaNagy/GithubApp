@@ -63,7 +63,6 @@ export class DetailComponent implements OnInit {
           this.developerLoaded = Promise.resolve(true);
           this.getFollowers();
           this.getRepositories();
-          // this.getIssues();
         });
     }
   }
@@ -87,17 +86,6 @@ export class DetailComponent implements OnInit {
         });
     }
   }
-
-  // getIssues(): void {
-  //   if (this.accessToken) {
-  //     this.githubService.getIssues(this.accessToken, this.perPage, this.repositoriesPage)
-  //       .subscribe((issues: any[]) => {
-  //         this.issues = this.issues.concat(issues);
-  //         console.log(issues)
-  //         // this.repositoriesLoaded = Promise.resolve(true);
-  //       });
-  //   }
-  // }
 
   getNextPageFollowers() {
     if (this.developer && this.developer.followers && this.followers.length < this.developer.followers) {

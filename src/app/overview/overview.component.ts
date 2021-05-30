@@ -27,21 +27,21 @@ export class OverviewComponent implements OnInit {
   getDevelopers(): void {
     this.githubService.getDevelopersByLocation(this.location, this.page, this.perPage, this.sort)
       .subscribe(developers => {
-        this.developers = this.developers.concat(developers.items);
+        //this.developers = this.developers.concat(developers.items);
         
         if (JSON.stringify(developers.items) != JSON.stringify([])){
           this.lastPage = true;
         }
-        /* developers.items.forEach((developer: Developer) => {
-          this.githubService.getDeveloperByUrl(developer.url).subscribe((user: Developer) => {
+         developers.items.forEach((developer: Developer) => {
+           if(developer.login)
+          this.githubService.getDeveloperByLogin(developer.login).subscribe((user: Developer) => {
             developer.name = user.name;
             developer.followers = user.followers;
             developer.public_repos = user.public_repos;
-            developer.created_at = user.created_at;
             this.developers.push(developer)
             }
           );
-        }); */
+        }); 
 
         this.developersLoaded = Promise.resolve(true);
       });

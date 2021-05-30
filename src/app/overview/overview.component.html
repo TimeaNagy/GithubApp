@@ -31,7 +31,7 @@
     <tbody>
       <tr scope="row" *ngFor="let developer of developers;" (click)="showDetail(developer)" style="cursor: pointer;">
         <td><img src={{developer.avatar_url}} class="rounded" width="100" height="100"></td>
-        <td>{{developer.login}}</td>
+        <td>{{developer.name}}</td>
         <td>{{developer.followers}}</td>
         <td>{{developer.public_repos}}</td>
       </tr>

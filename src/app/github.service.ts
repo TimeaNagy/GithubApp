@@ -47,12 +47,4 @@ export class GithubService {
     let headers = new HttpHeaders().append('Authorization', 'token ' + accessToken);
     return this.http.get(this.githubUrl + '/user',  { headers })
   }
-
-  // getIssues(accessToken: string, perPage: number, page: number): Observable<any> {
-  //   let headers = new HttpHeaders().append('Authorization', 'token ' + accessToken);
-  //   let params = new HttpParams().append('filter', 'all');
-  //   // params = params.append('page', page);
-  //   // params = params.append('per_page', perPage);
-  //   return this.http.get(this.githubUrl + '/issues',  { headers, params })
-  // }
 }

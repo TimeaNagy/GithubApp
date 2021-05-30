@@ -1,12 +1,11 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container container-fluid wrapper">
         <div class="col-md-6 col-lg-6">
-            <a class="nav-item nav-link" href="">Overview</a>
         </div>
         <div class="col-md-6 col-lg-6" style="text-align: right">
-            <a class="nav-item nav-link" href="https://github.com/login/oauth/authorize?client_id={{client_id}}">Log In</a>
-            <!-- <a class="nav-item nav-link" href="https://github.com/login/oauth/access_token?client_id={{client_id}}&client_secret={{client_secrets}}&code={{code}}">Lossn</a> -->
-            <!-- <button class="btn btn-light" (click)=logIn()> Log In</button> -->
+            <button *ngIf="loggedIn==true" class="btn btn-light" (click)="goToProfile()">My profile</button>
+            <a *ngIf="loggedIn==false" class="btn btn-light" href="https://github.com/login/oauth/authorize?client_id={{client_id}}">Log In</a>
+            <button *ngIf="loggedIn==true" class="btn btn-light" (click)="logOut()">Log Out</button>
         </div>
     </div>
 </nav>

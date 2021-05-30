@@ -6,6 +6,7 @@ import { OverviewComponent } from './overview/overview.component';
 const routes: Routes = [
   { path: '', component: OverviewComponent },
   { path: 'user/:login', component: DetailComponent },
+  { path: 'myProfile', component: DetailComponent },
 ];
 
 @NgModule({

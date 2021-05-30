@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Developer, Follower, Repository } from '../developer';
 import { GithubService } from '../github.service';
 
@@ -10,25 +10,36 @@ import { GithubService } from '../github.service';
 })
 export class DetailComponent implements OnInit {
   login: string | null = ""
+  accessToken: string | null = ""
   developerLoaded!: Promise<boolean>;
   followersLoaded!: Promise<boolean>;
   repositoriesLoaded!: Promise<boolean>;
   developer: Developer | undefined;
   followers: Follower[] = [];
   repositories: Repository[] = [];
+  issues: any[] = [];
   followersPage: number = 1;
   repositoriesPage: number = 1;
   perPage: number = 15;
   lastPageFollowers: boolean = false;
   lastPageRepositories: boolean = false;
+  loggedIn: boolean = false;
 
-  constructor(private githubService: GithubService, private route: ActivatedRoute) { }
+  constructor(private githubService: GithubService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
     this.login = this.route.snapshot.paramMap.get('login');
-    this.getDeveloper();
-    this.getFollowers();
-    this.getRepositories();
+    this.route.queryParams.subscribe(params => {
+      this.accessToken = params.accessToken;
+    });
+
+    if (this.login != null) {
+      this.getDeveloper();
+    } else if(this.accessToken){
+      this.loggedIn = true;
+      // this.router.navigate(['/myProfile']);
+      this.getCurrentUser();
+    }
   }
 
   getDeveloper(): void {
@@ -37,13 +48,27 @@ export class DetailComponent implements OnInit {
         .subscribe((developer: Developer) => {
           this.developer = developer;
           this.developerLoaded = Promise.resolve(true);
+          this.getFollowers();
+          this.getRepositories();
+        });
+    }
+  }
+
+  getCurrentUser(): void {
+    if (this.accessToken) {
+      this.githubService.getCurrentUser(this.accessToken)
+        .subscribe((developer: Developer) => {
+          this.developer = developer;
+          this.login = developer.login || null;
+          this.developerLoaded = Promise.resolve(true);
+          this.getFollowers();
+          this.getRepositories();
+          // this.getIssues();
         });
     }
   }
 
   getFollowers(): void {
-    console.log(this.lastPageFollowers)
-    console.log(this.lastPageFollowers == true)
     if (this.login) {
       this.githubService.getFollowersForDeveloper(this.login, this.perPage, this.followersPage)
         .subscribe((followers: Follower[]) => {
@@ -63,12 +88,23 @@ export class DetailComponent implements OnInit {
     }
   }
 
+  // getIssues(): void {
+  //   if (this.accessToken) {
+  //     this.githubService.getIssues(this.accessToken, this.perPage, this.repositoriesPage)
+  //       .subscribe((issues: any[]) => {
+  //         this.issues = this.issues.concat(issues);
+  //         console.log(issues)
+  //         // this.repositoriesLoaded = Promise.resolve(true);
+  //       });
+  //   }
+  // }
+
   getNextPageFollowers() {
     if (this.developer && this.developer.followers && this.followers.length < this.developer.followers) {
       this.followersPage = this.followersPage + 1;
       this.getFollowers();
     }
-    else{
+    else {
       this.lastPageFollowers = true;
     }
   }
@@ -78,7 +114,7 @@ export class DetailComponent implements OnInit {
       this.repositoriesPage = this.repositoriesPage + 1;
       this.getRepositories();
     }
-    else{
+    else {
       this.lastPageRepositories = true;
     }
   }

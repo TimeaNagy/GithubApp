@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
@@ -7,9 +7,10 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 })
 export class GithubService {
 
-  private githubUrl = 'https://api.github.com';
+  private githubUrl: string = 'https://api.github.com';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { 
+  }
 
   getDevelopersByLocation(location: string, page: number, perPage: number, sort: string): Observable<any> {
     let params = new HttpParams().append('q', 'location:' + location);
@@ -38,14 +39,20 @@ export class GithubService {
     return this.http.get(this.githubUrl + '/users/' + login + '/repos',  { params })
   }
 
-  getAccessToken(client_id: string, client_secrets: string, code: string): Observable<any> {
-    // let headers = new HttpHeaders().append('Access-Control-Allow-Origin', '*');
-    // headers = headers.append('Content-Type', 'application/json');
-    let params = new HttpParams().append('client_id', client_id);
-    params = params.append('client_secret', client_secrets);
-    params = params.append('code', code);
-    // console.log(headers)
-
-    return this.http.post('https://github.com/login/oauth/access_token', null, {params});
+  getAccessToken(code: string): Observable<any> {
+    return this.http.post('/oauth/getAccessToken', {code: code});
   }
+
+  getCurrentUser(accessToken: string): Observable<any> {
+    let headers = new HttpHeaders().append('Authorization', 'token ' + accessToken);
+    return this.http.get(this.githubUrl + '/user',  { headers })
+  }
+
+  // getIssues(accessToken: string, perPage: number, page: number): Observable<any> {
+  //   let headers = new HttpHeaders().append('Authorization', 'token ' + accessToken);
+  //   let params = new HttpParams().append('filter', 'all');
+  //   // params = params.append('page', page);
+  //   // params = params.append('per_page', perPage);
+  //   return this.http.get(this.githubUrl + '/issues',  { headers, params })
+  // }
 }
